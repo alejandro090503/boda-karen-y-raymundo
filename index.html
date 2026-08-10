@@ -112,17 +112,17 @@ section{padding:64px 22px}
 
 /* ── MUSIC BTN ────────────────────────────────────────── */
 .music-btn{
-  position:fixed;bottom:24px;right:20px;z-index:900;
-  width:54px;height:54px;border-radius:50%;
+  position:fixed;bottom:20px;right:16px;z-index:900;
+  width:70px;height:70px;border-radius:50%;
   background:transparent;border:none;
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;padding:0;
   transition:transform .35s cubic-bezier(.34,1.56,.64,1);
-  filter:drop-shadow(0 4px 14px rgba(0,0,0,.45));
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.55));
 }
 .music-btn:active{transform:scale(.92)}
 .music-btn .vinyl{
-  width:54px;height:54px;border-radius:50%;
+  width:70px;height:70px;border-radius:50%;
   transition:transform .35s cubic-bezier(.34,1.56,.64,1);
 }
 .music-btn.on .vinyl{animation:vinylSpin 2.4s linear infinite}
@@ -207,23 +207,33 @@ section{padding:64px 22px}
   position:relative;z-index:4;text-align:center;
   display:flex;flex-direction:column;align-items:center;
 }
-.h-monogram{
-  display:inline-block;position:relative;
-  line-height:1;margin-bottom:0;
-  text-shadow:0 2px 40px rgba(0,0,0,.35);
+/* Nombres al pie del hero */
+.h-names{
+  position:absolute;
+  bottom:64px;left:0;right:0;
+  text-align:center;padding:0 20px;
 }
-.mono-k,.mono-m{
-  font-family:'Le Major','Bodoni Moda',serif;
-  color:rgba(255,255,255,.93);
-  display:inline-block;vertical-align:top;
+.h-name-left,.h-name-right{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:clamp(40px,11vw,76px);
+  color:#fff;line-height:1;
+  text-shadow:0 2px 28px rgba(0,0,0,.6),0 0 60px rgba(0,0,0,.3);
+  letter-spacing:4px;margin:0;
 }
-.mono-k{
-  font-size:160px;font-weight:400;font-style:italic;
-  position:relative;z-index:2;
+.h-name-amp{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(28px,7vw,50px);
+  color:#fee4a8;line-height:1.2;margin:2px 0;
+  text-shadow:0 2px 16px rgba(0,0,0,.5);
 }
-.mono-m{
-  font-size:160px;font-weight:400;font-style:normal;
-  margin-left:8px;position:relative;z-index:1;
+.h-name-date{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(11px,3vw,16px);
+  color:rgba(255,255,255,.78);
+  letter-spacing:6px;text-transform:uppercase;
+  margin-top:10px;font-weight:500;
+  text-shadow:0 1px 8px rgba(0,0,0,.4);
 }
 .h-scroll{
   position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
@@ -260,10 +270,12 @@ section{padding:64px 22px}
   background:linear-gradient(to top,#fff8ee 0%,transparent 100%);
 }
 .fch-bg{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:cover;
+  position:absolute;
+  right:-40px;top:50%;
+  transform:translateY(-50%);
+  width:clamp(280px,58%,520px);height:auto;
   pointer-events:none;
+  opacity:.88;
 }
 .fch-content{
   position:relative;z-index:2;
@@ -558,7 +570,8 @@ section{padding:64px 22px}
 .fam-bg{
   position:absolute;inset:0;
   width:100%;height:100%;
-  object-fit:cover;
+  object-fit:contain;
+  opacity:.28;
   pointer-events:none;z-index:0;
 }
 #family::before,#family::after{
@@ -586,7 +599,7 @@ section{padding:64px 22px}
 .fam-sep{display:block;font-family:'Great Vibes',cursive;font-size:26px;color:var(--peach);line-height:1;margin:6px 0;}
 .sdiv{height:36px}
 
-/* ── GALLERY ──────────────────────────────────────────── */
+/* ── GALLERY — RUEDA 3D ──────────────────────────────── */
 #gallery{background:#fff8ee;padding:84px 0 96px;position:relative;overflow:hidden;}
 #gallery > .lbl,
 #gallery > .ttl,
@@ -594,30 +607,42 @@ section{padding:64px 22px}
 #gallery > .gal-sub{padding-left:22px;padding-right:22px}
 .gal-sub{text-align:center;font-size:14px;color:var(--cream);opacity:.65;line-height:1.85;margin:12px 0 0;letter-spacing:.5px;font-weight:500;}
 .gal-sub em{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--peach);font-style:italic;}
-.drop-stage{position:relative;height:380px;margin-top:28px;overflow:visible;}
-.drop-photo{
-  position:absolute;width:112px;height:150px;background:#fff;
-  border-radius:3px;padding:7px 7px 30px;
-  box-shadow:0 8px 30px rgba(92,61,0,.12);
-  left:50%;opacity:0;will-change:transform,opacity;cursor:pointer;transition:box-shadow .3s;
+.wheel-scene{
+  position:relative;width:100%;height:460px;
+  margin:36px auto 0;
+  perspective:1300px;
+  transform-style:preserve-3d;
+  overflow:visible;
 }
-.drop-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:2px;display:block;pointer-events:none;}
-.drop-photo-label{
-  position:absolute;bottom:7px;left:0;right:0;
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:9px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--peach);text-align:center;opacity:.65;font-weight:500;
+.wheel-ring{
+  position:absolute;width:100%;height:100%;
+  transform-style:preserve-3d;
+  cursor:grab;
 }
-.drop-photo-1{margin-left:-160px;top:8px}
-.drop-photo-2{margin-left:-56px;top:115px}
-.drop-photo-3{margin-left:48px;top:4px}
-.drop-photo-4{margin-left:-160px;top:210px}
-.drop-photo-5{margin-left:48px;top:200px}
-.drop-photo.focused{z-index:10!important}
-.drop-hint{
+.wheel-ring.dragging{cursor:grabbing}
+.wheel-card{
+  position:absolute;
+  width:185px;height:255px;
+  top:50%;left:50%;
+  margin-top:-127px;margin-left:-92px;
+  border-radius:6px;overflow:hidden;
+  box-shadow:0 10px 36px rgba(0,0,0,.38),0 2px 8px rgba(0,0,0,.18);
+  border:3px solid rgba(255,255,255,.9);
+  -webkit-user-select:none;user-select:none;
+  background:#fff;
+}
+.wheel-card img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;pointer-events:none;
+  -webkit-user-drag:none;
+}
+.gal-hint{
+  text-align:center;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:14px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--peach);opacity:.6;margin-top:14px;display:block;padding:0 28px;text-align:center;
+  font-size:13px;font-weight:500;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--peach);opacity:.7;margin-top:24px;display:block;
 }
 /* ── LIGHTBOX ─────────────────────────────────────────── */
 #galLightbox{
@@ -692,18 +717,6 @@ section{padding:64px 22px}
   padding:0;text-align:center;
   position:relative;overflow:hidden;
 }
-.ft-roses{
-  position:relative;width:100%;
-  pointer-events:none;z-index:0;
-  overflow:hidden;
-  max-height:38vw;
-  margin-bottom:-10px;
-}
-.ft-roses img{
-  width:100%;height:auto;display:block;
-  -webkit-mask-image:linear-gradient(to bottom, black 40%, transparent 100%);
-  mask-image:linear-gradient(to bottom, black 40%, transparent 100%);
-}
 .ft-body{
   padding:0 28px 52px;
   position:relative;z-index:2;
@@ -721,10 +734,11 @@ section{padding:64px 22px}
   margin-bottom:14px;
 }
 .ft-date{
-  font-family:'Le Major','Bodoni Moda',serif;
-  font-size:clamp(16px,4.5vw,20px);font-weight:400;
-  letter-spacing:4px;text-transform:uppercase;
-  color:#b8a99a;margin-bottom:32px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(17px,4.5vw,22px);font-weight:600;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--peach);margin-bottom:32px;
+  font-style:italic;
 }
 .ft-rings{
   width:120px;height:auto;margin:0 auto 40px;display:block;
@@ -830,28 +844,56 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
 <!-- MUSIC BTN -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()" aria-label="Música">
-  <svg class="vinyl" id="musicIcon" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- disco base negro -->
-    <circle cx="27" cy="27" r="27" fill="#111"/>
-    <!-- surcos del vinil -->
-    <circle cx="27" cy="27" r="24.5" stroke="#2a2a2a" stroke-width=".7"/>
-    <circle cx="27" cy="27" r="22.5" stroke="#1e1e1e" stroke-width=".6"/>
-    <circle cx="27" cy="27" r="20.5" stroke="#2a2a2a" stroke-width=".6"/>
-    <circle cx="27" cy="27" r="18.5" stroke="#1e1e1e" stroke-width=".6"/>
-    <circle cx="27" cy="27" r="16.5" stroke="#2a2a2a" stroke-width=".5"/>
-    <circle cx="27" cy="27" r="14.5" stroke="#1e1e1e" stroke-width=".5"/>
-    <circle cx="27" cy="27" r="12.5" stroke="#252525" stroke-width=".5"/>
-    <!-- etiqueta central coloreada (dorado de la paleta) -->
-    <circle cx="27" cy="27" r="10" fill="#8a6200"/>
-    <circle cx="27" cy="27" r="9.2" fill="none" stroke="rgba(255,255,255,.12)" stroke-width=".5"/>
-    <!-- texto en la etiqueta -->
-    <text x="27" y="24.5" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="3.2" font-weight="600" fill="rgba(255,255,255,.8)" letter-spacing=".8">KAREN</text>
-    <text x="27" y="28" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="2.4" fill="rgba(255,255,255,.5)" letter-spacing=".5">&amp;</text>
-    <text x="27" y="31.5" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="3.2" font-weight="600" fill="rgba(255,255,255,.8)" letter-spacing=".8">RAYMUNDO</text>
-    <!-- orificio central -->
-    <circle cx="27" cy="27" r="1.8" fill="#111"/>
-    <!-- reflejo superior sutil -->
-    <ellipse cx="19" cy="14" rx="6" ry="3" fill="rgba(255,255,255,.04)" transform="rotate(-30 19 14)"/>
+  <svg class="vinyl" id="musicIcon" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="vDisc" cx="38%" cy="34%" r="64%">
+        <stop offset="0%" stop-color="#2e2e2e"/>
+        <stop offset="60%" stop-color="#111"/>
+        <stop offset="100%" stop-color="#000"/>
+      </radialGradient>
+      <radialGradient id="vLabel" cx="42%" cy="38%" r="60%">
+        <stop offset="0%" stop-color="#d4aa50"/>
+        <stop offset="55%" stop-color="#a67b01"/>
+        <stop offset="100%" stop-color="#7a5800"/>
+      </radialGradient>
+      <radialGradient id="vShine" cx="28%" cy="26%" r="58%">
+        <stop offset="0%" stop-color="rgba(255,255,255,.20)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </radialGradient>
+      <filter id="vShadow" x="-20%" y="-20%" width="150%" height="150%">
+        <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000" flood-opacity=".6"/>
+      </filter>
+    </defs>
+    <!-- sombra base -->
+    <ellipse cx="36" cy="39" rx="32" ry="30" fill="rgba(0,0,0,.4)" filter="url(#vShadow)"/>
+    <!-- disco principal -->
+    <circle cx="36" cy="35" r="34" fill="url(#vDisc)"/>
+    <!-- surcos (más densos, más efecto) -->
+    <circle cx="36" cy="35" r="31" stroke="#1e1e1e" stroke-width=".9" fill="none"/>
+    <circle cx="36" cy="35" r="29" stroke="#262626" stroke-width=".8" fill="none"/>
+    <circle cx="36" cy="35" r="27" stroke="#1c1c1c" stroke-width=".8" fill="none"/>
+    <circle cx="36" cy="35" r="25" stroke="#242424" stroke-width=".7" fill="none"/>
+    <circle cx="36" cy="35" r="23" stroke="#1c1c1c" stroke-width=".7" fill="none"/>
+    <circle cx="36" cy="35" r="21" stroke="#222" stroke-width=".7" fill="none"/>
+    <circle cx="36" cy="35" r="19" stroke="#1c1c1c" stroke-width=".6" fill="none"/>
+    <circle cx="36" cy="35" r="17" stroke="#222" stroke-width=".6" fill="none"/>
+    <circle cx="36" cy="35" r="15" stroke="#1c1c1c" stroke-width=".6" fill="none"/>
+    <!-- label dorada con gradiente -->
+    <circle cx="36" cy="35" r="12.5" fill="url(#vLabel)"/>
+    <circle cx="36" cy="35" r="12" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".6"/>
+    <!-- texto -->
+    <text x="36" y="32.5" text-anchor="middle" font-family="serif" font-size="4.2" font-style="italic" fill="rgba(255,248,210,.92)" letter-spacing=".4">Karen</text>
+    <text x="36" y="37.2" text-anchor="middle" font-family="serif" font-size="3" fill="rgba(255,245,190,.65)" letter-spacing=".5">&amp;</text>
+    <text x="36" y="42" text-anchor="middle" font-family="serif" font-size="3.4" font-style="italic" fill="rgba(255,248,210,.85)" letter-spacing=".3">Raymundo</text>
+    <!-- centro -->
+    <circle cx="36" cy="35" r="2.4" fill="#0d0d0d"/>
+    <circle cx="36" cy="35" r="1.1" fill="#2a2a2a"/>
+    <!-- brillo superior (efecto 3D) -->
+    <circle cx="36" cy="35" r="34" fill="url(#vShine)"/>
+    <!-- highlight de borde -->
+    <circle cx="36" cy="35" r="34" stroke="rgba(255,255,255,.06)" stroke-width="1.2" fill="none"/>
+    <!-- reflejo lateral izquierdo -->
+    <ellipse cx="12" cy="30" rx="4" ry="9" fill="rgba(255,255,255,.04)" transform="rotate(-20 12 30)"/>
   </svg>
 </button>
 
@@ -862,15 +904,18 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 <!-- ═══════════════ 1. HERO ════════════════════════════ -->
 <section id="hero">
   <div class="h-bg" id="heroBg">
-    <video autoplay muted loop playsinline id="heroPic"
-           poster="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778390975158-4.jpeg">
-      <source src="hero.mp4" type="video/mp4">
-    </video>
+    <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hero.jpg"
+         alt="Karen y Raymundo — Fontana di Trevi" id="heroPic" loading="eager">
   </div>
   <div class="h-ov"></div>
 
   <div class="h-cnt" id="hCnt">
-    <p class="h-monogram" id="hMono"><span class="mono-k">K</span><span class="mono-m">R</span></p>
+    <div class="h-names">
+      <p class="h-name-left">Karen</p>
+      <p class="h-name-amp">&amp;</p>
+      <p class="h-name-right">Raymundo</p>
+      <p class="h-name-date">19 · IX · MMXXVI</p>
+    </div>
   </div>
 
   <div class="h-scroll" id="hScroll">
@@ -882,7 +927,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
 <!-- ═══════════════ 1.5. FECHA ══════════════════════════ -->
 <section id="fecha">
-  <img class="fch-bg" src="fondoKM.jpeg" alt="" loading="eager">
+  <img class="fch-bg" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/fondo-fecha.png" alt="" loading="eager">
   <div class="fch-content">
     <p class="fch-intro">Nosotros...</p>
     <p class="fch-n1">Karen</p>
@@ -1076,37 +1121,32 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
 
 <!-- ═══════════════ 6. GALERÍA ═══════════════════════ -->
-<!-- FOTOS PLACEHOLDER: pendiente galería de Karen y Raymundo — reemplazar src de cada img cuando estén disponibles -->
 <section id="gallery">
   <span class="lbl">Nuestra historia</span>
   <h2 class="ttl">Galería</h2>
   <div class="gline"></div>
   <p class="gal-sub"><em>Momentos que atesoramos</em></p>
 
-  <div class="drop-stage" id="dropStage">
-    <div class="drop-photo drop-photo-1" id="dropP1">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778391117941-0.jpeg" alt="Karen y Raymundo" loading="lazy">
-      <span class="drop-photo-label">Karen &amp; Raymundo</span>
-    </div>
-    <div class="drop-photo drop-photo-2" id="dropP2">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778391147359-0.jpeg" alt="Karen y Raymundo" loading="lazy">
-      <span class="drop-photo-label">Nuestra historia</span>
-    </div>
-    <div class="drop-photo drop-photo-3" id="dropP3">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778391186422-2.jpeg" alt="Karen y Raymundo" loading="lazy">
-      <span class="drop-photo-label">Juntos siempre</span>
-    </div>
-    <div class="drop-photo drop-photo-4" id="dropP4">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778391210199-0.jpeg" alt="Karen y Raymundo" loading="lazy">
-      <span class="drop-photo-label">Para siempre</span>
-    </div>
-    <div class="drop-photo drop-photo-5" id="dropP5">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/b697b668-0fa2-4ef9-8f55-3ddb7e29fb0a/1778391245300-0.jpeg" alt="Karen y Raymundo" loading="lazy">
-      <span class="drop-photo-label">Con amor</span>
+  <div class="wheel-scene" id="wheel-scene">
+    <div class="wheel-ring" id="wheel-ring">
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-01.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-02.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-03.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-04.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-05.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-06.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-07.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-08.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-09.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-10.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-11.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-12.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-13.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-14.jpg" alt="Karen y Raymundo" loading="lazy"></div>
+      <div class="wheel-card"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-15.jpg" alt="Karen y Raymundo" loading="lazy"></div>
     </div>
   </div>
-
-  <span class="drop-hint" id="dropHint">Toca cada foto para expandirla</span>
+  <span class="gal-hint" id="galHint">Arrastra para girar · Toca para ver</span>
 </section>
 
 
@@ -1176,7 +1216,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
 <!-- ═══════════════ 9. FAMILIA ════════════════════════ -->
 <section id="family">
-  <img class="fam-bg" src="fondo-familia.webp" alt="" loading="lazy">
+  <img class="fam-bg" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/fondo-familia.png" alt="" loading="lazy">
   <span class="lbl">Con amor de</span>
   <h2 class="ttl">Familia</h2>
   <div class="gline"></div>
@@ -1256,14 +1296,10 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
 <!-- ═══════════════ 12. FOOTER ═══════════════════════ -->
 <footer id="footer">
-  <div class="ft-roses">
-    <img src="footer-roses.jpeg" alt="" loading="lazy">
-  </div>
-
   <div class="ft-body">
     <p class="ft-msg">Te esperamos con mucho cariño...</p>
     <p class="ft-nofaltes">¡No Faltes!</p>
-    <p class="ft-date">19 de Septiembre de 2026</p>
+    <p class="ft-date">19 · Septiembre · 2026</p>
 
     <!-- Rings SVG -->
     <svg class="ft-rings" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -1865,54 +1901,93 @@ function ambientWind() {
   for (let i = 0; i < 8; i++) setTimeout(spawn, i * 900);
 }
 
-/* ── GALLERY · FOTOS QUE CAEN ───────────────────────── */
+/* ── GALLERY · CARRUSEL 3D ───────────────────────────── */
 function initGallery() {
-  const finalRotations = [-6, 3, -5, 4, -3];
-  const photos = [
-    { el: document.getElementById('dropP1'), rot: finalRotations[0] },
-    { el: document.getElementById('dropP2'), rot: finalRotations[1] },
-    { el: document.getElementById('dropP3'), rot: finalRotations[2] },
-    { el: document.getElementById('dropP4'), rot: finalRotations[3] },
-    { el: document.getElementById('dropP5'), rot: finalRotations[4] },
-  ].filter(p => p.el);
+  const ring   = document.getElementById('wheel-ring');
+  const cards  = Array.from(ring ? ring.querySelectorAll('.wheel-card') : []);
+  if (!cards.length) return;
+
+  const N      = cards.length;
+  const RADIUS = Math.round((185 / 2) / Math.tan(Math.PI / N)) + 40;
+  let   angle  = 0;
+  let   vel    = 0;
+  let   dragging = false;
+  let   lastX  = 0;
+  let   autoTicker = null;
+
+  cards.forEach((c, i) => {
+    const a = (360 / N) * i;
+    c.style.transform = `rotateY(${a}deg) translateZ(${RADIUS}px)`;
+  });
+
+  function applyAngle(a) {
+    angle = a;
+    ring.style.transform = `rotateY(${a}deg)`;
+  }
+
+  function startAuto() {
+    if (autoTicker) return;
+    autoTicker = gsap.ticker.add(() => {
+      if (!dragging) {
+        vel *= 0.96;
+        applyAngle(angle + vel);
+        if (Math.abs(vel) < 0.01) vel = 0.08;
+      }
+    });
+  }
 
   ScrollTrigger.create({
-    trigger: '#dropStage', start: 'top 75%', once: true,
+    trigger: '#gallery', start: 'top 80%', once: true,
     onEnter() {
-      photos.forEach((p, i) => {
-        gsap.set(p.el, {
-          y: -(window.innerHeight * 0.75 + 200),
-          rotation: p.rot + (i % 2 === 0 ? 35 : -30),
-          opacity: 1, zIndex: i + 1,
-        });
-        gsap.to(p.el, {
-          y: 0, rotation: p.rot,
-          duration: 1.2 + i * 0.05, ease: 'power2.in', delay: i * 0.6,
-          onComplete() {
-            gsap.to(p.el, { y: -10, rotation: p.rot * 0.6, duration: .15, ease: 'power1.out',
-              onComplete() { gsap.to(p.el, { y: 0, rotation: p.rot, duration: .2, ease: 'power2.inOut' }); }
-            });
-            gsap.to(p.el, { boxShadow: `0 ${28 + i*6}px ${70 + i*10}px rgba(92,61,0,.24)`, duration: .25 });
-          }
-        });
-      });
+      gsap.from(ring, { opacity: 0, scale: 0.85, duration: 1, ease: 'power2.out' });
+      startAuto();
     }
   });
 
-  // tap to expand — lightbox
+  // drag
+  function onDown(e) {
+    dragging = true;
+    vel = 0;
+    lastX = e.touches ? e.touches[0].clientX : e.clientX;
+    ring.classList.add('dragging');
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    const x  = e.touches ? e.touches[0].clientX : e.clientX;
+    const dx = x - lastX;
+    lastX = x;
+    vel = dx * 0.25;
+    applyAngle(angle + vel);
+  }
+  function onUp() {
+    dragging = false;
+    ring.classList.remove('dragging');
+  }
+
+  ring.addEventListener('mousedown',   onDown);
+  ring.addEventListener('touchstart',  onDown, { passive: true });
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, { passive: true });
+  window.addEventListener('mouseup',   onUp);
+  window.addEventListener('touchend',  onUp);
+
+  // lightbox
   const lb    = document.getElementById('galLightbox');
   const lbImg = document.getElementById('galLightboxImg');
-  function closeLb() { lb.classList.remove('open'); }
-  lb.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
-  document.getElementById('galLbClose').addEventListener('click', closeLb);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+  if (lb) {
+    function closeLb() { lb.classList.remove('open'); }
+    lb.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
+    const closeBtn = document.getElementById('galLbClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeLb);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 
-  photos.forEach(p => {
-    p.el.addEventListener('click', () => {
-      lbImg.src = p.el.querySelector('img').src;
-      lb.classList.add('open');
+    cards.forEach(c => {
+      c.addEventListener('click', () => {
+        lbImg.src = c.querySelector('img').src;
+        lb.classList.add('open');
+      });
     });
-  });
+  }
 }
 </script>
 </body>
