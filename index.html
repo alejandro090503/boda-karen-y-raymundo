@@ -181,8 +181,8 @@ section{padding:64px 22px}
 }
 .h-bg img,
 .h-bg video{
-  width:100%;height:100%;object-fit:cover;object-position:center 40%;
-  filter:brightness(.72) saturate(.6) contrast(1.06);
+  width:100%;height:100%;object-fit:cover;object-position:center 18%;
+  filter:brightness(.75) saturate(.6) contrast(1.06);
   display:block;
 }
 .h-ov{
@@ -271,11 +271,10 @@ section{padding:64px 22px}
 }
 .fch-bg{
   position:absolute;
-  right:-40px;top:50%;
-  transform:translateY(-50%);
-  width:clamp(280px,58%,520px);height:auto;
-  pointer-events:none;
-  opacity:.88;
+  right:-20px;top:-24px;
+  width:clamp(280px,60%,500px);height:auto;
+  object-fit:contain;object-position:top right;
+  pointer-events:none;opacity:.88;
 }
 .fch-content{
   position:relative;z-index:2;
@@ -374,14 +373,14 @@ section{padding:64px 22px}
   display:block;
 }
 .cd-lbl{
-  font-family:'Lato',sans-serif;font-weight:500;
-  font-size:8px;letter-spacing:3.5px;text-transform:uppercase;
-  color:rgba(212,197,178,.55);margin-top:8px;
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:9px;letter-spacing:3.5px;text-transform:uppercase;
+  color:#D4C5B2;margin-top:8px;
 }
 .cd-falta{
   font-family:'Cormorant Garamond',serif;font-weight:400;font-style:italic;
   font-size:22px;letter-spacing:2px;
-  color:rgba(212,197,178,.7);margin-bottom:18px;
+  color:#fee4a8;margin-bottom:18px;
   display:block;text-align:center;
 }
 .cd-sep{
@@ -904,8 +903,8 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 <!-- ═══════════════ 1. HERO ════════════════════════════ -->
 <section id="hero">
   <div class="h-bg" id="heroBg">
-    <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hero.jpg"
-         alt="Karen y Raymundo — Fontana di Trevi" id="heroPic" loading="eager">
+    <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/foto-01.jpg"
+         alt="Karen y Raymundo" id="heroPic" loading="eager">
   </div>
   <div class="h-ov"></div>
 
@@ -914,7 +913,6 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       <p class="h-name-left">Karen</p>
       <p class="h-name-amp">&amp;</p>
       <p class="h-name-right">Raymundo</p>
-      <p class="h-name-date">19 · IX · MMXXVI</p>
     </div>
   </div>
 
@@ -1466,13 +1464,13 @@ function toast(msg) {
 
 /* ── HERO ANIMATIONS ─────────────────────────────────── */
 function heroAnim() {
-  gsap.set('#hMono', { opacity: 0, scale: .85 });
+  gsap.set('.h-names', { opacity: 0, y: 18 });
   gsap.set('#hScroll', { opacity: 0 });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   tl
-    .to('#hMono',  { opacity: 1, scale: 1, duration: 1.2 }, .2)
-    .to('#hScroll',{ opacity: 1, duration: .5 }, 1.4);
+    .to('.h-names', { opacity: 1, y: 0, duration: 1.4 }, .3)
+    .to('#hScroll', { opacity: 1, duration: .5 }, 1.6);
 
   gsap.to('#heroBg', {
     yPercent: 22, ease: 'none',
