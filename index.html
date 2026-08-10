@@ -169,11 +169,7 @@ section{padding:64px 22px}
 /* ── HERO ─────────────────────────────────────────────── */
 #hero{
   min-height:100svh;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;
-  position:relative;overflow:hidden;padding:0 28px 88px;
-}
-.h-cnt{
-  margin-top:14vh;
+  position:relative;overflow:hidden;
 }
 .h-bg{
   position:absolute;top:-20%;left:0;right:0;bottom:-20%;
@@ -182,58 +178,51 @@ section{padding:64px 22px}
 .h-bg img,
 .h-bg video{
   width:100%;height:100%;object-fit:cover;object-position:center 18%;
-  filter:brightness(.75) saturate(.6) contrast(1.06);
+  filter:brightness(.78) saturate(.65) contrast(1.05);
   display:block;
 }
 .h-ov{
   position:absolute;inset:0;z-index:1;
-  background:
-    linear-gradient(to bottom, transparent 82%, var(--ink) 100%),
-    radial-gradient(ellipse 85% 70% at 50% 48%,
-      transparent 0%,
-      transparent 40%,
-      rgba(30,38,8,.32) 60%,
-      rgba(20,28,5,.65) 80%,
-      rgba(12,18,2,.88) 100%);
+  background:linear-gradient(
+    to bottom,
+    rgba(20,15,2,.10) 0%,
+    rgba(20,15,2,.05) 30%,
+    rgba(20,15,2,.50) 65%,
+    rgba(20,15,2,.86) 84%,
+    var(--ink) 100%
+  );
 }
-.h-ov::after{
-  content:'';position:absolute;
-  left:50%;top:44%;transform:translate(-50%,-50%);
-  width:70%;max-width:320px;aspect-ratio:1;
-  background:radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 55%);
-  pointer-events:none;
+.h-bottom{
+  position:relative;z-index:3;margin-top:auto;
+  padding:0 28px 64px;text-align:center;
 }
-.h-cnt{
-  position:relative;z-index:4;text-align:center;
-  display:flex;flex-direction:column;align-items:center;
-}
-/* Nombres al pie del hero */
-.h-names{
-  position:absolute;
-  bottom:64px;left:0;right:0;
-  text-align:center;padding:0 20px;
-}
-.h-name-left,.h-name-right{
-  font-family:'Cormorant Garamond',serif;
-  font-weight:600;
-  font-size:clamp(40px,11vw,76px);
-  color:#fff;line-height:1;
-  text-shadow:0 2px 28px rgba(0,0,0,.6),0 0 60px rgba(0,0,0,.3);
-  letter-spacing:4px;margin:0;
-}
-.h-name-amp{
-  font-family:'Great Vibes',cursive;
-  font-size:clamp(28px,7vw,50px);
-  color:#fee4a8;line-height:1.2;margin:2px 0;
-  text-shadow:0 2px 16px rgba(0,0,0,.5);
-}
-.h-name-date{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(11px,3vw,16px);
-  color:rgba(255,255,255,.78);
-  letter-spacing:6px;text-transform:uppercase;
-  margin-top:10px;font-weight:500;
+.h-eyebrow{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;letter-spacing:5px;text-transform:uppercase;
+  color:#fee4a8;margin-bottom:10px;opacity:0;
   text-shadow:0 1px 8px rgba(0,0,0,.4);
+}
+.h-names{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(46px,13vw,64px);line-height:1.08;
+  color:#fff;margin:0 0 14px;
+  text-shadow:0 3px 32px rgba(0,0,0,.55);
+  transform:translateY(30px);opacity:0;
+}
+.h-amp{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(20px,5vw,26px);font-style:italic;
+  color:#fee4a8;display:block;letter-spacing:6px;margin:2px 0;
+}
+.h-badge{
+  display:inline-flex;align-items:center;gap:12px;padding:8px 24px;
+  border:1px solid rgba(166,123,1,.5);border-radius:30px;
+  background:rgba(20,15,2,.35);backdrop-filter:blur(4px);
+  transform:translateY(16px);opacity:0;
+}
+.h-badge span{
+  font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;
+  text-transform:uppercase;color:#fee4a8;
 }
 .h-scroll{
   position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
@@ -908,11 +897,15 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
   </div>
   <div class="h-ov"></div>
 
-  <div class="h-cnt" id="hCnt">
-    <div class="h-names">
-      <p class="h-name-left">Karen</p>
-      <p class="h-name-amp">&amp;</p>
-      <p class="h-name-right">Raymundo</p>
+  <div class="h-bottom">
+    <div class="h-eyebrow" id="hEb">Sábado · 19 de Septiembre · 2026</div>
+    <h1 class="h-names" id="hNm">
+      Karen
+      <span class="h-amp">&amp;</span>
+      Raymundo
+    </h1>
+    <div class="h-badge" id="hBd">
+      <span>Tecamachalco · Puebla</span>
     </div>
   </div>
 
@@ -1464,13 +1457,17 @@ function toast(msg) {
 
 /* ── HERO ANIMATIONS ─────────────────────────────────── */
 function heroAnim() {
-  gsap.set('.h-names', { opacity: 0, y: 18 });
+  gsap.set('#hEb', { opacity: 0 });
+  gsap.set('#hNm', { opacity: 0, y: 30 });
+  gsap.set('#hBd', { opacity: 0, y: 16 });
   gsap.set('#hScroll', { opacity: 0 });
 
-  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
   tl
-    .to('.h-names', { opacity: 1, y: 0, duration: 1.4 }, .3)
-    .to('#hScroll', { opacity: 1, duration: .5 }, 1.6);
+    .to('#hEb', { opacity: 1, duration: 1.2 }, .3)
+    .to('#hNm', { opacity: 1, y: 0, duration: 1.8, ease: 'power3.out' }, .7)
+    .to('#hBd', { opacity: 1, y: 0, duration: 1.2 }, 1.3)
+    .to('#hScroll', { opacity: 1, duration: .5 }, 1.8);
 
   gsap.to('#heroBg', {
     yPercent: 22, ease: 'none',
