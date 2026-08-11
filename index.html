@@ -519,11 +519,25 @@ section{padding:64px 22px}
   color:#fff;text-align:center;margin-bottom:32px;line-height:1.1;
 }
 .dc-outfits{
+  position:relative;
   display:flex;align-items:flex-end;justify-content:center;
-  gap:24px;margin:0 auto 36px;max-width:300px;
+  gap:20px;margin:0 auto 36px;max-width:340px;
+  padding:38px 26px 20px;
 }
-.dc-outfit{display:flex;flex-direction:column;align-items:center;}
-.dc-outfit svg{height:160px;width:auto;}
+.dc-outfits::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:var(--peach-lt);
+  border-radius:20px;
+  -webkit-mask-image:radial-gradient(ellipse 88% 82% at 50% 50%, black 50%, transparent 100%);
+  mask-image:radial-gradient(ellipse 88% 82% at 50% 50%, black 50%, transparent 100%);
+}
+.dc-outfit{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.dc-outfit img{height:190px;width:auto;display:block;filter:drop-shadow(0 8px 16px rgba(46,26,29,.28));}
+.dc-outfit-lbl{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;
+  font-size:14px;letter-spacing:1.5px;color:#fff;
+  text-shadow:0 1px 6px rgba(46,26,29,.35);
+}
 .dc-type-txt{
   font-family:'Cormorant Garamond',serif;
   font-size:clamp(22px,6vw,30px);font-weight:400;
@@ -803,6 +817,40 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
   .tl-orn,.tl-pulse{animation:none!important}
   .tl-row-inner > *{transition:none!important}
 }
+
+/* ── HOSPEDAJE · CARRUSEL ─────────────────────────────── */
+.hosp-carousel{position:relative;max-width:380px;margin:30px auto 0}
+.hosp-viewport{overflow:hidden}
+.hosp-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.hosp-slide{flex:0 0 100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 30px}
+.hosp-photo{width:200px;height:200px;border-radius:50%;overflow:hidden;border:3px solid rgba(166,123,1,.3);box-shadow:0 12px 34px rgba(92,61,0,.18);margin-bottom:22px}
+.hosp-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hosp-arrow{position:absolute;top:108px;transform:translateY(-50%);width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.7);border:1px solid rgba(166,123,1,.25);border-radius:50%;cursor:pointer;color:var(--peach);z-index:2;padding:0;backdrop-filter:blur(3px)}
+.hosp-arrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.hosp-arrow.prev{left:-2px}
+.hosp-arrow.next{right:-2px}
+.hosp-dots{display:flex;justify-content:center;gap:8px;margin-top:22px}
+.hosp-dots button{width:8px;height:8px;border-radius:50%;border:none;background:rgba(166,123,1,.3);cursor:pointer;padding:0;transition:background .25s,transform .25s}
+.hosp-dots button.active{background:var(--peach);transform:scale(1.3)}
+.hosp-name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:21px;color:var(--cream);margin-bottom:6px}
+.hosp-city{font-family:'Lato',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--peach);opacity:.8;margin-bottom:16px}
+.hosp-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-hosp{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1.5px solid var(--peach);border-radius:50px;color:var(--peach);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14.5px;letter-spacing:.5px;text-decoration:none;background:transparent;transition:background .25s,color .25s}
+.btn-hosp:hover{background:var(--peach);color:#fff}
+.btn-hosp svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:400px){
+  .hosp-carousel{max-width:340px}
+  .hosp-slide{padding:8px 22px}
+  .hosp-photo{width:172px;height:172px}
+  .hosp-arrow{top:94px}
+  .hosp-name{font-size:20px}
+  .btn-hosp{padding:10px 18px;font-size:14px}
+}
+@media(max-width:340px){
+  .hosp-photo{width:152px;height:152px}
+  .hosp-arrow{top:84px}
+  .btn-hosp{padding:9px 14px;font-size:13px}
+}
   </style>
 </head>
 <body>
@@ -979,12 +1027,11 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       </svg>
     </div>
     <p class="loc-title">Ceremonia</p>
-    <!-- FOTO PLACEHOLDER: pendiente foto de la iglesia -->
     <div class="loc-photo" id="loc-photo-1">
-      <img src="iglesia.jpeg" alt="Lugar de la ceremonia religiosa, Tecamachalco, Puebla" loading="lazy">
+      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/ex-convento.jpg" alt="Ex Convento Franciscano de la Virgen de la Asunción, Tecamachalco, Puebla" loading="lazy">
     </div>
     <p class="loc-time">12:00 pm</p>
-    <p class="loc-venue">Ceremonia Religiosa<br>Tecamachalco, Puebla</p>
+    <p class="loc-venue">Ex Convento Franciscano<br>de la Virgen de la Asunción<br>Tecamachalco, Puebla</p>
     <a href="https://maps.app.goo.gl/K8BGHqb8u2ySYy9s5?g_st=ic" target="_blank" rel="noopener" class="loc-btn">Ver Ubicación</a>
   </div>
 
@@ -1004,12 +1051,11 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
       </svg>
     </div>
     <p class="loc-title">Recepción</p>
-    <!-- FOTO PLACEHOLDER: pendiente foto del salón -->
     <div class="loc-photo" id="loc-photo-2">
-      <img src="salon.jpeg" alt="Lugar de la recepción, Tecamachalco, Puebla" loading="lazy">
+      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/salon-angelita.jpg" alt="Salón Angelita, Tecamachalco, Puebla" loading="lazy">
     </div>
     <p class="loc-time">1:30 pm</p>
-    <p class="loc-venue">Cóctel de Bienvenida<br>Tecamachalco, Puebla</p>
+    <p class="loc-venue">Salón Angelita<br>Tecamachalco, Puebla</p>
     <a href="https://maps.app.goo.gl/wNSKL5zp9o3Gy2mc7?g_st=ic" target="_blank" rel="noopener" class="loc-btn">Ver Ubicación</a>
   </div>
 
@@ -1173,28 +1219,13 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
   <div class="dc-outfits">
     <!-- Traje caballero -->
     <div class="dc-outfit">
-      <svg viewBox="0 0 80 180" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M40 10 L30 18 L28 22 L32 24 L28 60 L24 60 L22 170 H38 L40 130 L42 170 H58 L56 60 L52 60 L48 24 L52 22 L50 18 Z" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="1.2"/>
-        <path d="M32 24 L40 50 L48 24" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="1"/>
-        <path d="M35 22 L40 38 L45 22" fill="#1a1a1a" stroke="none"/>
-        <rect x="36" y="18" width="8" height="5" rx="1" fill="#fff" stroke="none"/>
-        <path d="M38 18 L40 23 L42 18" fill="none" stroke="#ccc" stroke-width=".8"/>
-        <path d="M33 60 L33 95" stroke="#2a2a2a" stroke-width=".6" stroke-dasharray="0" opacity=".3"/>
-        <path d="M47 60 L47 95" stroke="#2a2a2a" stroke-width=".6" opacity=".3"/>
-      </svg>
+      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/caballero.png" alt="Traje formal caballero" loading="lazy">
+      <span class="dc-outfit-lbl">Caballeros</span>
     </div>
     <!-- Vestido dama -->
     <div class="dc-outfit">
-      <svg viewBox="0 0 90 180" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M35 12 L33 8 M55 12 L57 8" stroke="#d4c5b2" stroke-width="1.2"/>
-        <path d="M35 12 Q45 8 55 12 L56 40 Q45 36 34 40 Z" fill="#e8ddd0" stroke="#d4c5b2" stroke-width="1"/>
-        <path d="M34 40 Q45 36 56 40" fill="none" stroke="#d4c5b2" stroke-width="1"/>
-        <path d="M34 40 L10 170 Q45 178 80 170 L56 40" fill="#e8ddd0" stroke="#d4c5b2" stroke-width="1"/>
-        <path d="M30 70 Q20 120 16 160" stroke="#d4c5b2" stroke-width=".7" opacity=".4"/>
-        <path d="M38 55 Q32 100 26 155" stroke="#d4c5b2" stroke-width=".6" opacity=".3"/>
-        <path d="M60 70 Q70 120 74 160" stroke="#d4c5b2" stroke-width=".7" opacity=".4"/>
-        <path d="M52 55 Q58 100 64 155" stroke="#d4c5b2" stroke-width=".6" opacity=".3"/>
-      </svg>
+      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/dama.png" alt="Vestido formal dama" loading="lazy">
+      <span class="dc-outfit-lbl">Damas</span>
     </div>
   </div>
 
@@ -1250,6 +1281,78 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
     <p class="fam-nms">
       <span>Linda Karen López Apolinar</span>
     </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════ 10. HOSPEDAJE ══════════════════════ -->
+<section id="lodging">
+  <span class="lbl">Para tu estancia</span>
+  <h2 class="ttl">Sugerencia de Hospedaje</h2>
+  <div class="gline"></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;text-align:center;color:var(--cream);opacity:.78;max-width:320px;margin:0 auto 4px">Si vienes de fuera, te recomendamos estas opciones de hospedaje cercanas.</p>
+
+  <div class="hosp-carousel">
+    <button class="hosp-arrow prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="hosp-arrow next" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <div class="hosp-viewport">
+      <div class="hosp-track" id="hospTrack">
+
+        <div class="hosp-slide">
+          <div class="hosp-photo"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hotel-new-york-inn.jpg" alt="Hotel New York Inn" loading="lazy"></div>
+          <div class="hosp-name">Hotel New York Inn</div>
+          <div class="hosp-city">Tecamachalco, Puebla</div>
+          <div class="hosp-btns">
+            <a class="btn-hosp" href="https://www.google.com/search?q=Hotel+New+York+Inn+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M7 7V5a5 5 0 0110 0v2"/></svg>
+              Reservar
+            </a>
+            <a class="btn-hosp" href="https://www.google.com/maps/search/Hotel+New+York+Inn+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Cómo llegar
+            </a>
+          </div>
+        </div>
+
+        <div class="hosp-slide">
+          <div class="hosp-photo"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hotel-san-mateo.jpg" alt="Hotel San Mateo" loading="lazy"></div>
+          <div class="hosp-name">Hotel San Mateo</div>
+          <div class="hosp-city">Tecamachalco, Puebla</div>
+          <div class="hosp-btns">
+            <a class="btn-hosp" href="https://www.google.com/search?q=Hotel+San+Mateo+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M7 7V5a5 5 0 0110 0v2"/></svg>
+              Reservar
+            </a>
+            <a class="btn-hosp" href="https://www.google.com/maps/search/Hotel+San+Mateo+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Cómo llegar
+            </a>
+          </div>
+        </div>
+
+        <div class="hosp-slide">
+          <div class="hosp-photo"><img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hotel-porton-cortes.jpg" alt="El Portón de Cortés" loading="lazy"></div>
+          <div class="hosp-name">El Portón de Cortés</div>
+          <div class="hosp-city">Tecamachalco, Puebla</div>
+          <div class="hosp-btns">
+            <a class="btn-hosp" href="https://www.google.com/search?q=El+Porton+de+Cortes+Hotel+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M7 7V5a5 5 0 0110 0v2"/></svg>
+              Reservar
+            </a>
+            <a class="btn-hosp" href="https://www.google.com/maps/search/El+Porton+de+Cortes+Hotel+Tecamachalco+Puebla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Cómo llegar
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="hosp-dots" id="hospDots">
+      <button class="active" aria-label="Hotel 1"></button>
+      <button aria-label="Hotel 2"></button>
+      <button aria-label="Hotel 3"></button>
+    </div>
   </div>
 </section>
 
@@ -1436,10 +1539,44 @@ document.addEventListener('DOMContentLoaded', () => {
         ambientWind();
         initGallery();
         initRSVP();
+        initHospCarousel();
       }
     });
   });
 });
+
+/* ── HOSPEDAJE · CARRUSEL SWIPE ──────────────────────── */
+function initHospCarousel() {
+  const track = document.getElementById('hospTrack');
+  if (!track) return;
+  const slides = track.children.length;
+  const dots = document.querySelectorAll('#hospDots button');
+  let idx = 0;
+  function go(i) {
+    idx = (i + slides) % slides;
+    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+    dots.forEach((d, k) => d.classList.toggle('active', k === idx));
+  }
+  const prev = document.querySelector('.hosp-arrow.prev');
+  const next = document.querySelector('.hosp-arrow.next');
+  if (prev) prev.addEventListener('click', () => go(idx - 1));
+  if (next) next.addEventListener('click', () => go(idx + 1));
+  dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+  let sx = 0, sy = 0;
+  track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? idx + 1 : idx - 1);
+  }, { passive: true });
+  go(0);
+
+  gsap.fromTo('#lodging .hosp-carousel',
+    { opacity: 0, y: 34, scale: .96 },
+    { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'power4.out',
+      scrollTrigger: { trigger: '#lodging', start: 'top 80%', once: true }
+    });
+}
 
 /* ── SCROLL PROGRESS ─────────────────────────────────── */
 window.addEventListener('scroll', () => {
