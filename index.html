@@ -196,10 +196,13 @@ section{padding:64px 22px}
   position:relative;z-index:3;margin-top:auto;
   padding:0 28px 64px;text-align:center;
 }
+/* NOTA: el hero se deja visible por CSS a propósito. heroAnim() hace el
+   gsap.set(opacity:0) antes de animar, así que la entrada se ve igual; pero
+   si el JS no llega a correr, los nombres siguen siendo legibles. */
 .h-eyebrow{
   font-family:'Cormorant Garamond',serif;font-style:italic;
   font-size:12px;letter-spacing:5px;text-transform:uppercase;
-  color:#fee4a8;margin-bottom:10px;opacity:0;
+  color:#fee4a8;margin-bottom:10px;
   text-shadow:0 1px 8px rgba(0,0,0,.4);
 }
 .h-names{
@@ -207,7 +210,6 @@ section{padding:64px 22px}
   font-size:clamp(46px,13vw,64px);line-height:1.08;
   color:#fff;margin:0 0 14px;
   text-shadow:0 3px 32px rgba(0,0,0,.55);
-  transform:translateY(30px);opacity:0;
 }
 .h-amp{
   font-family:'Cormorant Garamond',serif;
@@ -218,7 +220,6 @@ section{padding:64px 22px}
   display:inline-flex;align-items:center;gap:12px;padding:8px 24px;
   border:1px solid rgba(166,123,1,.5);border-radius:30px;
   background:rgba(20,15,2,.35);backdrop-filter:blur(4px);
-  transform:translateY(16px);opacity:0;
 }
 .h-badge span{
   font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:4px;
@@ -1602,35 +1603,66 @@ document.addEventListener('DOMContentLoaded', () => {
     if (aud2) { aud2.play().then(() => { document.getElementById('musicBtn')?.classList.add('on'); }).catch(()=>{}); }
   }
 
+  /* Arranque idempotente: la invitación NO debe depender de que el video
+     llegue a 'ended'. Si el mp4 no carga, falla o el navegador bloquea el
+     autoplay, igual hay que inicializar todo (countdown, galería, hospedaje). */
+  let started = false;
+  function startInvitation() {
+    if (started) return;
+    started = true;
+
+    /* Inicializar PRIMERO y quitar el loader después: si dependiéramos del
+       onComplete de GSAP, una pestaña en segundo plano (ticker pausado) o un
+       tween interrumpido dejaría la invitación entera sin inicializar. */
+    try { initInvitation();    } catch (e) { console.error('initInvitation', e); }
+    try { ambientWind();       } catch (e) { console.error('ambientWind', e); }
+    try { initGallery();       } catch (e) { console.error('initGallery', e); }
+    try { initRSVP();          } catch (e) { console.error('initRSVP', e); }
+    try { initHospCarousel();  } catch (e) { console.error('initHospCarousel', e); }
+
+    if (loaderEl) {
+      loaderEl.style.transition = 'opacity .6s ease';
+      loaderEl.style.opacity = '0';
+      loaderEl.style.pointerEvents = 'none';
+      setTimeout(() => loaderEl.remove(), 700);
+    }
+    setTimeout(() => { try { ScrollTrigger.refresh(); } catch (e) {} }, 60);
+  }
+
+  let failSafe = null;
   sobreBtn.addEventListener('click', () => {
     sobreBtn.style.opacity = '0';
     sobreBtn.style.pointerEvents = 'none';
 
-    sobreVid.play();
     function crossfade(){
       sobreVid.style.opacity = '1';
       gsap.to('.sobre-img',{opacity:0, duration:.5, ease:'power2.out'});
     }
+
+    const p = sobreVid.play();
+    if (p && p.catch) p.catch(() => startInvitation()); // autoplay bloqueado → entrar directo
+
     if(sobreVid.readyState >= 2){
       crossfade();
+      /* Ya está listo: dar el tiempo del clip + margen. */
+      clearTimeout(failSafe);
+      failSafe = setTimeout(startInvitation, (sobreVid.duration || 8) * 1000 + 2500);
     } else {
       sobreVid.addEventListener('playing', crossfade, {once:true});
+      /* Aún no carga (el mp4 pesa ~1.7 MB): no hacer esperar al invitado
+         frente a un sobre congelado. Si no arranca en 3.5 s, entramos. */
+      clearTimeout(failSafe);
+      failSafe = setTimeout(startInvitation, 3500);
+      sobreVid.addEventListener('playing', () => {
+        clearTimeout(failSafe);
+        failSafe = setTimeout(startInvitation, (sobreVid.duration || 8) * 1000 + 2500);
+      }, {once:true});
     }
   });
 
-  sobreVid.addEventListener('ended', () => {
-    gsap.to(loaderEl, {
-      opacity: 0, duration: .6, ease: 'power2.out',
-      onComplete() {
-        loaderEl.remove();
-        initInvitation();
-        ambientWind();
-        initGallery();
-        initRSVP();
-        initHospCarousel();
-      }
-    });
-  });
+  sobreVid.addEventListener('ended', startInvitation);
+  sobreVid.addEventListener('error', startInvitation);
+  sobreVid.addEventListener('stalled', () => { clearTimeout(failSafe); failSafe = setTimeout(startInvitation, 3000); });
 });
 
 /* ── HOSPEDAJE · CARRUSEL SWIPE ──────────────────────── */
@@ -1693,6 +1725,18 @@ function heroAnim() {
     .to('#hNm', { opacity: 1, y: 0, duration: 1.8, ease: 'power3.out' }, .7)
     .to('#hBd', { opacity: 1, y: 0, duration: 1.2 }, 1.3)
     .to('#hScroll', { opacity: 1, duration: .5 }, 1.8);
+
+  /* GSAP pausa su ticker si la pestaña pasa a segundo plano; sin esto los
+     nombres pueden quedarse en opacity:0 si el invitado cambia de app justo
+     al abrir el sobre. Garantizamos el estado final pase lo que pase. */
+  setTimeout(() => {
+    ['#hEb','#hNm','#hBd','#hScroll'].forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el && parseFloat(getComputedStyle(el).opacity) < 1) {
+        gsap.set(sel, { opacity: 1, y: 0, clearProps: 'transform' });
+      }
+    });
+  }, 4000);
 
   gsap.to('#heroBg', {
     yPercent: 22, ease: 'none',
@@ -2110,12 +2154,15 @@ function addSectionMedals() {
     const sec = document.getElementById(id);
     if (!sec) return;
     const lbl = sec.querySelector('.lbl');
-    if (!lbl) return;
+    if (!lbl || !lbl.parentNode) return;
     const m = document.createElement('div');
     m.className = 'sec-medal';
     m.innerHTML = `<span>${map[id]}</span>`;
     gsap.set(m, { opacity: 0, scale: .7 });
-    sec.insertBefore(m, lbl);
+    /* insertar contra el padre REAL del label: querySelector busca en todo el
+       subárbol, así que .lbl puede estar anidado (p. ej. dentro de .rsvp-card)
+       y sec.insertBefore lanzaría NotFoundError, cortando la inicialización. */
+    lbl.parentNode.insertBefore(m, lbl);
     ScrollTrigger.create({
       trigger: sec, start: 'top 86%', once: true,
       onEnter() { gsap.to(m, { opacity: 1, scale: 1, duration: .9, ease: 'back.out(1.6)' }); }
@@ -2147,12 +2194,12 @@ function addCorners() {
 function addWindOrns() {
   document.querySelectorAll('section').forEach(sec => {
     const lbl = sec.querySelector('.lbl');
-    if (!lbl) return;
+    if (!lbl || !lbl.parentNode) return;
     const orn = document.createElement('div');
     orn.className = 'wind-orn';
     orn.textContent = '✦';
     gsap.set(orn, { opacity: 0 });
-    sec.insertBefore(orn, lbl);
+    lbl.parentNode.insertBefore(orn, lbl);
     ScrollTrigger.create({
       trigger: sec, start: 'top 88%', once: true,
       onEnter() { gsap.to(orn, { opacity: 1, duration: 1.2, ease: 'power2.out' }); }
@@ -2268,15 +2315,26 @@ function initGallery() {
     });
   }
 
-  ScrollTrigger.create({
-    trigger: '#gallery', start: 'top 90%', once: true,
-    onEnter() {
-      loadImages();
-      layout();
-      gsap.from(ring, { opacity: 0, scale: 0.85, duration: 1, ease: 'power2.out' });
-      startAuto();
-    }
-  });
+  function activate() {
+    loadImages();
+    layout();
+    startAuto();
+  }
+
+  /* IntersectionObserver nativo en vez de ScrollTrigger: no depende de GSAP ni
+     de que el ticker esté corriendo, y no se descalibra si el layout cambia
+     mientras el loader del sobre aún está encima. */
+  const gal = document.getElementById('gallery');
+  if ('IntersectionObserver' in window && gal) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) { activate(); io.disconnect(); }
+    }, { rootMargin: '300px 0px' });
+    io.observe(gal);
+    /* Si por lo que sea el observer nunca dispara, no dejar la galería vacía. */
+    setTimeout(() => { if (!imgsLoaded) activate(); }, 6000);
+  } else {
+    activate();
+  }
 
   // drag
   function onDown(e) {
