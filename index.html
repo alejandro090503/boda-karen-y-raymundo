@@ -171,14 +171,17 @@ section{padding:64px 22px}
   min-height:100svh;display:flex;flex-direction:column;
   position:relative;overflow:hidden;
 }
+/* El sobredimensionado del contenedor es el margen que consume el parallax.
+   Estaba en ±20% (=140% de alto), lo que obligaba a escalar la foto ~1.5x y
+   se veía ampliada y blanda. Con ±7% basta para el recorrido del scroll. */
 .h-bg{
-  position:absolute;top:-20%;left:0;right:0;bottom:-20%;
+  position:absolute;top:-7%;left:0;right:0;bottom:-7%;
   z-index:0;will-change:transform;
 }
 .h-bg img,
 .h-bg video{
-  width:100%;height:100%;object-fit:cover;object-position:center 18%;
-  filter:brightness(.78) saturate(.65) contrast(1.05);
+  width:100%;height:100%;object-fit:cover;object-position:center center;
+  filter:brightness(.80) saturate(.7) contrast(1.03);
   display:block;
 }
 .h-ov{
@@ -649,9 +652,12 @@ section{padding:64px 22px}
   -webkit-user-select:none;user-select:none;
   background:linear-gradient(135deg,#f3e6cd 0%,#e8d5ae 100%);
 }
+/* Las gal-XX.jpg ya vienen recortadas al ratio del card y centradas en los
+   novios (detección facial), así que aquí basta 'center' — un object-position
+   fijo tipo 'top' volvería a descuadrar unas u otras. */
 .wheel-card img{
   width:100%;height:100%;
-  object-fit:cover;object-position:center top;
+  object-fit:cover;object-position:center center;
   display:block;pointer-events:none;
   -webkit-user-drag:none;
   opacity:0;transition:opacity .5s ease;
@@ -980,8 +986,8 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 <!-- ═══════════════ 1. HERO ════════════════════════════ -->
 <section id="hero">
   <div class="h-bg" id="heroBg">
-    <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hero-beso.jpg"
-         alt="Karen y Raymundo" id="heroPic" loading="eager">
+    <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/hero-v2.jpg"
+         alt="Karen y Raymundo" id="heroPic" loading="eager" fetchpriority="high">
   </div>
   <div class="h-ov"></div>
 
@@ -1225,21 +1231,21 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
 
   <div class="wheel-scene" id="wheel-scene">
     <div class="wheel-ring" id="wheel-ring">
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-01.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-02.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-03.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-04.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-05.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-06.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-07.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-08.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-09.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-10.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-11.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-12.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-13.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-14.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
-      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/render/image/public/fotos-clientes/karen-raymundo/foto-15.jpg?width=420&quality=72" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-01.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-02.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-03.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-04.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-05.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-06.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-07.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-08.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-09.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-10.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-11.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-12.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-13.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-14.jpg" alt="Karen y Raymundo" decoding="async"></div>
+      <div class="wheel-card"><img data-src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/gal-15.jpg" alt="Karen y Raymundo" decoding="async"></div>
     </div>
   </div>
   <span class="gal-hint" id="galHint">Arrastra para girar · Toca para ver</span>
@@ -1738,8 +1744,10 @@ function heroAnim() {
     });
   }, 4000);
 
+  /* Recorrido acotado al margen real del contenedor (±7%), si no la foto se
+     despega y aparece una franja vacía al hacer scroll. */
   gsap.to('#heroBg', {
-    yPercent: 22, ease: 'none',
+    yPercent: 7, ease: 'none',
     scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 }

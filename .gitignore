@@ -2,3 +2,9 @@
 .claude
 
 .vercel
+.env*
+crops/
+faces.json
+positions.json
+_contact_sheet.jpg
+_crops_sheet.jpg
