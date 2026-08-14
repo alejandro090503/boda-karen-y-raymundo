@@ -406,9 +406,12 @@ section{padding:64px 22px}
 .loc-icon svg{width:56px;height:56px;}
 .loc-title{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,9vw,44px);
+  font-size:clamp(32px,8.2vw,44px);
   color:var(--cream);margin-bottom:22px;line-height:1.2;
   font-weight:500;
+  /* "Ceremonia Religiosa" es casi el doble de largo que "Recepción"; si en una
+     pantalla angosta llega a partirse, que lo haga en dos líneas parejas. */
+  text-wrap:balance;
 }
 .loc-photo{
   width:210px;height:210px;border-radius:50%;
@@ -739,7 +742,7 @@ section{padding:64px 22px}
   text-align:center;letter-spacing:.3px;outline:none;min-height:52px;
   transition:border-color .3s,box-shadow .3s,background .3s;-webkit-appearance:none;box-sizing:border-box;font-weight:500;
 }
-.rsvp-input::placeholder{color:var(--cream);opacity:.4;font-style:italic;font-weight:400}
+.rsvp-input::placeholder{color:var(--cream);opacity:.55;font-style:italic;font-weight:400}
 .rsvp-input:focus{border-color:var(--peach);box-shadow:0 0 0 3px rgba(166,123,1,.15);background:rgba(255,255,255,.96)}
 .rsvp-btn2{
   display:flex;align-items:center;justify-content:center;gap:10px;
@@ -1020,7 +1023,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
     <p class="fch-amp">y</p>
     <p class="fch-n1">Raymundo</p>
     <p class="fch-full">López Apolinar</p>
-    <p class="fch-honor">Tenemos el honor<br>de invitarte a celebrar<br>nuestra unión,<br>y el bautizo de nuestra<br>pequeña <span class="fch-highlight">Ana Sofía</span><br>López Machorro.</p>
+    <p class="fch-honor">Tenemos el honor<br>de invitarte a celebrar<br>nuestra boda religiosa,<br>y el bautizo de nuestra<br>pequeña <span class="fch-highlight">Ana Sofía</span><br>López Machorro.</p>
     <p class="fch-date">19.09.26</p>
   </div>
 </section>
@@ -1079,7 +1082,7 @@ section.has-sec-waves{padding-top:84px;padding-bottom:86px}
         <path d="M28 22l4-4 4 4"/>
       </svg>
     </div>
-    <p class="loc-title">Ceremonia</p>
+    <p class="loc-title">Ceremonia Religiosa</p>
     <div class="loc-photo" id="loc-photo-1">
       <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/karen-raymundo/ex-convento.jpg" alt="Ex Convento Franciscano de la Virgen de la Asunción, Tecamachalco, Puebla" loading="lazy">
     </div>
@@ -1980,7 +1983,7 @@ function initRSVP() {
       const inp = document.createElement('input');
       inp.className = 'rsvp-input';
       inp.type = 'text';
-      inp.placeholder = i === 0 ? (urlPara || 'Tu nombre completo') : `Acompañante ${i}`;
+      inp.placeholder = count === 1 ? 'Escribe tu nombre completo' : `Nombre completo del invitado ${i + 1}`;
       inp.autocomplete = 'off';
       fieldsEl.appendChild(inp);
     }
@@ -2025,7 +2028,7 @@ function initRSVP() {
           selectRsvp('no');
           if (btnText) btnText.textContent = 'Actualizar respuesta';
         }
-      }).catch(() => {});
+      }).catch(err => { console.error('RSVP precarga:', err); });
   }
 
   if (frozen) {
