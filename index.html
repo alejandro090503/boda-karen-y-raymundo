@@ -1950,7 +1950,7 @@ aud.play().then(() => {
 function initRSVP() {
   const PANEL_API = 'https://panel-invitados.vercel.app/api/confirmar';
   const RSVP_URL  = 'https://boda-karen-y-raymundo.vercel.app';
-  const DEADLINE  = new Date(2026, 8, 12, 23, 59, 59, 999);
+  const DEADLINE  = new Date(2026, 8, 12, 23, 59, 59, 999);   /* 12 sep 2026 */
   const frozen    = Date.now() > DEADLINE.getTime();
 
   const params   = new URLSearchParams(window.location.search);
